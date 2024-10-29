@@ -1,0 +1,48 @@
+Experiment_name: Appr_modalities_{}_lr_{}_batch_{}_temperature_{}
+# feeder, currently no preprocessing implemented so that we run the first evaluation using sequences of segments
+
+
+feeder_args:
+  data_path: data/segmented_gestures/small_segmented_gestures_with_text.pkl
+  poses_path: data/selected_poses/poses_{}_synced_pp{}.npy
+  audio_path: /home/eghaleb/data/{}_synced_pp{}.wav
+  apply_skeleton_augmentations: True
+  n_views: 2
+  debug: False
+  random_choose: False
+  random_shift: True
+  window_size: 25
+  normalization: True
+  random_mirror: True
+  random_mirror_p: 0.5
+  is_vector: False
+
+# model for embeddings
+model_args:
+  modalities: ['skeleton']
+  fusion: 'none'
+  feat_dim: 128
+
+# loss
+#optim
+weight_decay: 0.0001
+
+# training
+device: [0, 1]
+keep_rate: 0.9
+batch_size: 256
+num_epoch: 1000
+nesterov: True
+num_workers: 8
+momentum: 0.9
+learning_rate: 0.0001
+lr_rate_decay: 0.1
+lr_decay_epochs: 700,800,900
+weight_decay: 0.0001
+temp: 0.1
+
+# general config
+accumulate_grad_batches: 1
+scheduler: 'plateau'
+
+loss_function: 'NTXent'

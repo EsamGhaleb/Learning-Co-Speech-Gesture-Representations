@@ -1,0 +1,54 @@
+Experiment_name: Appr_modalities_{}_lr_{}_batch_{}_temperature_{}_augment_combined
+# feeder, currently no preprocessing implemented so that we run the first evaluation using sequences of segments
+feeder_args:
+  # data_path: data/segmented_gestures/small_segmented_gestures_with_text.pkl
+  data_path: dialog_utils/data/gestures_info_with_text.csv
+  poses_path: data/selected_poses/poses_{}_synced_pp{}.npy
+  audio_path: /data/clusterfs/mld/users/esagha/data/{}_synced_pp{}.wav
+  apply_skeleton_augmentations: True
+  n_views: 2
+  debug: False
+  random_choose: False
+  random_shift: True
+  window_size: 25
+  normalization: True
+  random_mirror: True
+  random_mirror_p: 0.5
+  is_vector: False
+
+# model for embeddings
+model_args:
+  modalities: ['speech', 'skeleton']
+  fusion: 'late'
+  feat_dim: 128
+  w2v2_type: 'multilingual'
+
+# augmenation file
+skeleton_augmentations_path: 'config/augmentations/skeleton_simple_aug.yaml'
+
+# model for audio
+audio_model: model.audio_model.Wav2Vec2
+audio_model_args:
+  w2v2_type: 'multilingual'
+  freeze: True
+
+# training
+device: [0, 1]
+keep_rate: 0.9
+batch_size: 128
+num_epoch: 1000
+nesterov: True
+num_workers: 8
+momentum: 0.9
+learning_rate: 0.0005
+lr_rate_decay: 0.1
+lr_decay_epochs: 700,800,900
+weight_decay: 0.0001
+temp: 0.1
+
+
+# general config
+accumulate_grad_batches: 1
+scheduler: 'plateau'
+
+loss_function: 'Combined'
