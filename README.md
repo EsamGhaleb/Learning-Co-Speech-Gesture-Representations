@@ -1,5 +1,4 @@
-# Repository for speech and gestural alignment --> to be prepared for ICMI24
-# Speech and Gestural Alignment Repository
+# Learning Co-Speech Gesture Representations in Dialogue through Contrastive Learning: An Intrinsic Evaluation
 This repository contains resources and scripts necessary for the project to be presented at ICMI24. It is focused on aligning speech with gestures.
 
 ## Getting Started
